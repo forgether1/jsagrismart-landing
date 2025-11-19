@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JSAgriSmart – Smart Price Insights for Smarter Agriculture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f8f6e9;
+      --primary: #0b7a3b;
+      --primary-soft: #e4f3e7;
+      --accent: #f4b000;
+      --text-main: #133122;
+      --text-muted: #54615a;
+      --card-bg: #ffffff;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 20px 64px;
+    }
+
+    /* Header / Nav */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .lang-toggle {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(11, 122, 59, 0.25);
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--primary);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(11, 122, 59, 0.06);
+      transform: translateY(-1px);
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 750;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .hero-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .hero-phone {
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      max-width: 320px;
+      margin-left: auto;
+      border: 1px solid rgba(19, 49, 34, 0.06);
+    }
+
+    .phone-top {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .phone-notch {
+      width: 60px;
+      height: 6px;
+      border-radius: 10px;
+      background: #e2e4de;
+    }
+
+    .phone-screen {
+      background: #fcf7df;
+      border-radius: 22px;
+      padding: 16px 14px 18px;
+      border: 1px solid #f1e6bd;
+    }
+
+    .phone-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .phone-chart {
+      position: relative;
+      height: 120px;
+      border-radius: 12px;
+      background: #fffdf3;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+    }
+
+    .phone-chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .phone-role-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.74rem;
+    }
+
+    .phone-tag {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(11, 122, 59, 0.08);
+      color: var(--primary);
+    }
+
+    /* Features */
+    .section-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    h2.section-title {
+      font-size: 1.4rem;
+      margin-bottom: 14px;
+    }
+
+    .section-intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 20px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(19, 49, 34, 0.04);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 650;
+      margin-bottom: 6px;
+    }
+
+    .card-tagline {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .card ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card ul li {
+      margin-bottom: 6px;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .card ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+    }
+
+    .card-badge {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+      background: #fff5d1;
+      color: #8b5b00;
+    }
+
+    /* Who Benefits */
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px 14px;
+      border: 1px dashed rgba(19, 49, 34, 0.13);
+    }
+
+    .benefit-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    .benefit-head span.emoji {
+      font-size: 1.2rem;
+    }
+
+    .benefit-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* How it works + insight */
+    .how-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 36px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(11, 122, 59, 0.03);
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: #fff;
+      border: 1px solid rgba(11, 122, 59, 0.3);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .step-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+
+    .insight-card {
+      background: #fff7e0;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      border: 1px solid #f1e0aa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .data-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(19, 49, 34, 0.08);
+      padding-top: 16px;
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* 固定在右下角的二维码 */
+    .qr-fixed {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      z-index: 50;
+    }
+
+    .qr-fixed img {
+      display: block;
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+    }
+
+    .qr-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 4px;
+      max-width: 130px;
+    }
+
+    /* Responsive */
+    @media (max-width: 840px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-phone {
+        margin: 0 auto;
+        max-width: 280px;
+      }
+
+      .feature-grid,
+      .benefit-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .how-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .qr-fixed {
+        right: 12px;
+        bottom: 12px;
+        padding: 6px;
+      }
+
+      .qr-fixed img {
+        width: 96px;
+        height: 96px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <!-- logo 路径已替换为在线链接 -->
+        <img src="https://i.ibb.co/BVPTtMgN/c53cf026baa42ea612d31a89048fa922.jpg" alt="JSAgriSmart logo" class="brand-logo-img" />
+        <span>JSAgriSmart</span>
+      </div>
+      <nav>
+        <a href="#features" id="navFeatures">Features</a>
+        <a href="#roles" id="navRoles">Who Benefits</a>
+        <a href="#how" id="navHow">How It Works</a>
+        <a href="#contact" id="navContact">Contact</a>
+        <button type="button" class="lang-toggle" id="langToggle">EN / 中文</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <div class="hero-badge">
+            <span id="heroBadgeText">Real-time price intelligence</span>
+          </div>
+          <h1 class="hero-title" id="heroTitle">
+            Smart price insights for smarter agriculture.
+          </h1>
+          <p class="hero-subtitle" id="heroSubtitle">
+            JSAgriSmart transforms scattered crop price data into clear, actionable insights so farmers,
+            managers, and retailers can plan with confidence.
+          </p>
+          <p class="hero-note" id="heroNote">
+            Role-based login for the entire agricultural value chain — from field to retail shelf.
+          </p>
+        </div>
+
+        <aside class="hero-phone" aria-label="App preview">
+          <div class="phone-top">
+            <div class="phone-notch"></div>
+          </div>
+          <div class="phone-screen">
+            <div class="phone-label">
+              <span id="phoneLabelLeft">Crop prices</span>
+              <span id="phoneLabelRight">Next 7 days</span>
+            </div>
+            <div class="phone-chart">
+              <svg viewBox="0 0 100 40" class="phone-chart-svg">
+                <line x1="0" y1="28" x2="100" y2="28"
+                      stroke="rgba(19,49,34,0.25)" stroke-width="1" />
+                <polyline
+                  points="0,30 15,26 30,24 45,20 60,16 75,19 90,12 100,14"
+                  fill="none"
+                  stroke="#f68600"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="phone-role-tags">
+              <span class="phone-tag" id="phoneTagFarmer">👨‍🌾 Farmer view</span>
+              <span class="phone-tag" id="phoneTagInventory">📦 Inventory alerts</span>
+              <span class="phone-tag" id="phoneTagMargin">🧮 Margin monitor</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="features" aria-labelledby="features-title">
+        <div class="section-label" id="featuresLabel">Features</div>
+        <h2 class="section-title" id="featuresTitle">What JSAgriSmart helps you do</h2>
+        <p class="section-intro" id="featuresIntro">
+          Turn noisy market price information into data you can trust. JSAgriSmart collects, cleans and
+          visualizes crop prices in one place, then tailors the experience to each role in the value chain.
+        </p>
+
+        <div class="feature-grid">
+          <!-- Feature 1 -->
+          <article class="card">
+            <h3 class="card-title" id="feature1Title">Multi-role login</h3>
+            <p class="card-tagline" id="feature1Tagline">One app that adapts to each stakeholder.</p>
+            <ul>
+              <li id="feature1Item1">Separate, role-based accounts for farmers, managers and retailers.</li>
+              <li id="feature1Item2">Customized dashboards and permissions for each role.</li>
+              <li id="feature1Item3">Shared view of key price indicators across the whole chain.</li>
+            </ul>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="card">
+            <h3 class="card-title" id="feature2Title">Regional market distribution</h3>
+            <p class="card-tagline" id="feature2Tagline">
+              See how prices vary across cities and quickly find better deals.
+            </p>
+            <ul>
+              <li id="feature2Item1">Visual comparison of crop prices by region and city.</li>
+              <li id="feature2Item2">Identify low, medium and high price areas at a glance.</li>
+              <li id="feature2Item3">Connect sellers and buyers more efficiently along the value chain.</li>
+            </ul>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="card">
+            <div class="card-badge" id="feature3Badge">Forecast</div>
+            <h3 class="card-title" id="feature3Title">Smart price forecasting</h3>
+            <p class="card-tagline" id="feature3Tagline">Predict upcoming price movements with data-driven models.</p>
+            <ul>
+              <li id="feature3Item1">Forecasts based on historical prices from trusted sources.</li>
+              <li id="feature3Item2">Scenario views to understand "what if demand shifts".</li>
+              <li id="feature3Item3">Supports planning for contracts, logistics and inventory.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- WHO BENEFITS -->
+      <section id="roles" aria-labelledby="roles-title">
+        <div class="section-label" id="rolesLabel">Who benefits</div>
+        <h2 class="section-title" id="rolesTitle">Designed for the whole agricultural value chain</h2>
+        <p class="section-intro" id="rolesIntro">
+          Whether you grow, coordinate or sell, JSAgriSmart gives each role the specific information they
+          need — in one shared platform.
+        </p>
+
+        <div class="benefit-grid">
+          <article class="benefit-card">
+            <div class="benefit-head">
+              <span class="emoji">👨‍🌾</span>
+              <span id="role1Title">Farmers</span>
+            </div>
+            <p class="benefit-body" id="role1Body">
+              See real-time and forecast prices to decide which crop to plant, when to harvest, and
+              whether to store or sell immediately.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-head">
+              <span class="emoji">📊</span>
+              <span id="role2Title">Managers</span>
+            </div>
+            <p class="benefit-body" id="role2Body">
+              Track price trends across regions, balance supply and demand, and adjust purchase plans
+              before volatility hits your margins.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-head">
+              <span class="emoji">🛒</span>
+              <span id="role3Title">Retailers</span>
+            </div>
+            <p class="benefit-body" id="role3Body">
+              Align buying decisions with upcoming price changes, manage promotions and keep shelves
+              stocked without overpaying.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS / INSIGHT -->
+      <section id="how" aria-labelledby="how-title">
+        <div class="section-label" id="howLabel">How it works</div>
+        <h2 class="section-title" id="howTitle">From raw price data to confident decisions</h2>
+
+        <div class="how-grid">
+          <div class="steps">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div>
+                <div class="step-title" id="step1Title">Collect & clean data</div>
+                <div id="step1Body">
+                  JSAgriSmart automatically pulls crop prices from the cnhnb.com website and other
+                  market sources, then removes duplicates and outliers.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div>
+                <div class="step-title" id="step2Title">Model trends & forecasts</div>
+                <div id="step2Body">
+                  Historical patterns, seasonality and recent changes are combined into clear trend
+                  lines and short-term forecasts.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div>
+                <div class="step-title" id="step3Title">Deliver role-based insights</div>
+                <div id="step3Body">
+                  Each user sees only what matters for their decisions – from planting schedules and
+                  purchase plans to retail pricing and inventory.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="insight-card">
+            <p id="insightMain">
+              JSAgriSmart turns scattered price data into clear insights. Every stakeholder gains a
+              shared, data-driven view of the market, reducing guesswork and helping the entire chain
+              move in the same direction.
+            </p>
+            <p class="data-note" id="dataNote">
+              All price data in this prototype are sourced from the cnhnb.com website.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CONTACT / GET STARTED -->
+      <section id="contact" aria-labelledby="contact-title">
+        <div class="section-label" id="contactLabel">Get started</div>
+        <h2 class="section-title" id="contactTitle">Try JSAgriSmart with your next harvest</h2>
+        <p class="section-intro" id="contactIntro">
+          For this demo, JSAgriSmart focuses on price insights and visualizations. Future versions can
+          connect to real farm and retailer data for live decision support.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        © <span id="year"></span> JSAgriSmart. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <span id="footerProto">Prototype for demo day</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 右下角二维码 -->
+  <div class="qr-fixed">
+    <!-- 二维码路径已替换为在线链接 -->
+    <img src="https://i.ibb.co/h1Bn58rR/0432516c98a5811ddb755ceab1a0b1a5.png" alt="JSAgriSmart QR code" />
+    <div class="qr-caption" id="qrCaption">Scan to view JSAgriSmart prototype</div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        navFeatures: "Features",
+        navRoles: "Who Benefits",
+        navHow: "How It Works",
+        navContact: "Contact",
+
+        heroBadgeText: "Real-time price intelligence",
+        heroTitle: "Smart price insights for smarter agriculture.",
+        heroSubtitle:
+          "JSAgriSmart transforms scattered crop price data into clear, actionable insights so farmers, managers, and retailers can plan with confidence.",
+        heroNote:
+          "Role-based login for the entire agricultural value chain — from field to retail shelf.",
+
+        phoneLabelLeft: "Crop prices",
+        phoneLabelRight: "Next 7 days",
+        phoneTagFarmer: "👨‍🌾 Farmer view",
+        phoneTagInventory: "📦 Inventory alerts",
+        phoneTagMargin: "🧮 Margin monitor",
+
+        featuresLabel: "Features",
+        featuresTitle: "What JSAgriSmart helps you do",
+        featuresIntro:
+          "Turn noisy market price information into data you can trust. JSAgriSmart collects, cleans and visualizes crop prices in one place, then tailors the experience to each role in the value chain.",
+
+        feature1Title: "Multi-role login",
+        feature1Tagline: "One app that adapts to each stakeholder.",
+        feature1Item1: "Separate, role-based accounts for farmers, managers and retailers.",
+        feature1Item2: "Customized dashboards and permissions for each role.",
+        feature1Item3: "Shared view of key price indicators across the whole chain.",
+
+        feature2Title: "Regional market distribution",
+        feature2Tagline: "See how prices vary across cities and quickly find better deals.",
+        feature2Item1: "Visual comparison of crop prices by region and city.",
+        feature2Item2: "Identify low, medium and high price areas at a glance.",
+        feature2Item3: "Connect sellers and buyers more efficiently along the value chain.",
+
+        feature3Badge: "Forecast",
+        feature3Title: "Smart price forecasting",
+        feature3Tagline: "Predict upcoming price movements with data-driven models.",
+        feature3Item1: "Forecasts based on historical prices from trusted sources.",
+        feature3Item2: "Scenario views to understand 'what if demand shifts'.",
+        feature3Item3: "Supports planning for contracts, logistics and inventory.",
+
+        rolesLabel: "Who benefits",
+        rolesTitle: "Designed for the whole agricultural value chain",
+        rolesIntro:
+          "Whether you grow, coordinate or sell, JSAgriSmart gives each role the specific information they need — in one shared platform.",
+
+        role1Title: "Farmers",
+        role1Body:
+          "See real-time and forecast prices to decide which crop to plant, when to harvest, and whether to store or sell immediately.",
+        role2Title: "Managers",
+        role2Body:
+          "Track price trends across regions, balance supply and demand, and adjust purchase plans before volatility hits your margins.",
+        role3Title: "Retailers",
+        role3Body:
+          "Align buying decisions with upcoming price changes, manage promotions and keep shelves stocked without overpaying.",
+
+        howLabel: "How it works",
+        howTitle: "From raw price data to confident decisions",
+        step1Title: "Collect & clean data",
+        step1Body:
+          "JSAgriSmart automatically pulls crop prices from the cnhnb.com website and other market sources, then removes duplicates and outliers.",
+        step2Title: "Model trends & forecasts",
+        step2Body:
+          "Historical patterns, seasonality and recent changes are combined into clear trend lines and short-term forecasts.",
+        step3Title: "Deliver role-based insights",
+        step3Body:
+          "Each user sees only what matters for their decisions – from planting schedules and purchase plans to retail pricing and inventory.",
+
+        insightMain:
+          "JSAgriSmart turns scattered price data into clear insights. Every stakeholder gains a shared, data-driven view of the market, reducing guesswork and helping the entire chain move in the same direction.",
+        dataNote:
+          "All price data in this prototype are sourced from the cnhnb.com website.",
+
+        contactLabel: "Get started",
+        contactTitle: "Try JSAgriSmart with your next harvest",
+        contactIntro:
+          "For this demo, JSAgriSmart focuses on price insights and visualizations. Future versions can connect to real farm and retailer data for live decision support.",
+
+        footerProto: "Prototype for demo day",
+        qrCaption: "Scan to view JSAgriSmart prototype"
+      },
+      zh: {
+        navFeatures: "功能介绍",
+        navRoles: "适用角色",
+        navHow: "运行方式",
+        navContact: "联系我们",
+
+        heroBadgeText: "实时农产品价格洞察",
+        heroTitle: "用价格洞察让农业决策更聪明。",
+        heroSubtitle:
+          "JSAgriSmart 将分散的农产品价格数据汇总成清晰的可视化洞察，帮助种植户、管理者和零售商更有把握地做计划。",
+        heroNote:
+          "基于角色的账号体系，覆盖从田间到零售终端的整条农业价值链。",
+
+        phoneLabelLeft: "作物价格",
+        phoneLabelRight: "未来 7 天",
+        phoneTagFarmer: "👨‍🌾 农户视图",
+        phoneTagInventory: "📦 库存预警",
+        phoneTagMargin: "🧮 利润监控",
+
+        featuresLabel: "功能介绍",
+        featuresTitle: "JSAgriSmart 能帮你做什么",
+        featuresIntro:
+          "JSAgriSmart 将嘈杂的市场价格信息清洗、整合到一个平台中，并根据不同角色提供定制化的价格视图和分析。",
+
+        feature1Title: "多角色登录",
+        feature1Tagline: "一个应用服务多方参与者。",
+        feature1Item1: "为农户、管理者和零售商分别提供角色账号。",
+        feature1Item2: "不同角色拥有专属界面与权限配置。",
+        feature1Item3: "全链路共享关键价格指标和趋势。",
+
+        feature2Title: "区域价格分布",
+        feature2Tagline: "对比不同城市价格，快速找到更优报价。",
+        feature2Item1: "按地区、城市对作物价格进行可视化对比。",
+        feature2Item2: "一眼识别低价、正常价和高价区域。",
+        feature2Item3: "更高效地撮合买卖双方，优化流通路径。",
+
+        feature3Badge: "价格预测",
+        feature3Title: "智能价格预测",
+        feature3Tagline: "基于数据模型预测未来价格走势。",
+        feature3Item1: "利用历史价格和权威数据源进行建模预测。",
+        feature3Item2: "通过情景分析理解'如果需求变化会怎样'。",
+        feature3Item3: "为采购合同、物流和库存规划提供依据。",
+
+        rolesLabel: "适用角色",
+        rolesTitle: "覆盖整条农业价值链的使用场景",
+        rolesIntro:
+          "无论你是负责种植、统筹还是销售，JSAgriSmart 都能为你提供所需的信息，并保持各方在同一个数据视角上协同。",
+
+        role1Title: "农户",
+        role1Body:
+          "结合实时与预测价格，决定种什么、何时收获，以及是立即出售还是择机入库。",
+
+        role2Title: "管理者",
+        role2Body:
+          "跟踪各地区价格走势，平衡供需结构，在波动真正影响利润之前提前调整采购计划。",
+
+        role3Title: "零售商",
+        role3Body:
+          "根据即将到来的价格变化安排采购与促销活动，既保证货架充足，又避免高价进货。",
+
+        howLabel: "运行方式",
+        howTitle: "从原始数据到可执行决策",
+        step1Title: "采集与清洗数据",
+        step1Body:
+          "系统自动从 cnhnb.com 网站以及其他市场来源获取作物价格，并进行去重与异常值清洗。",
+
+        step2Title: "建模趋势与预测",
+        step2Body:
+          "综合历史规律、季节性和近期变化，生成清晰的价格趋势线和短期预测结果。",
+
+        step3Title: "按角色交付洞察",
+        step3Body:
+          "不同角色只看到与自己决策相关的信息，从种植计划到采购和定价都更加聚焦高价值数据。",
+
+        insightMain:
+          "JSAgriSmart 将分散的价格数据转化为清晰洞察，让各方在同一个数据视角下协同，降低拍脑袋决策的风险。",
+        dataNote:
+          "本 Demo 中展示的价格数据均来自 cnhnb.com 网站。",
+
+        contactLabel: "开始体验",
+        contactTitle: "在下一季收获中试用 JSAgriSmart",
+        contactIntro:
+          "当前 Demo 主要展示价格洞察和可视化能力，未来版本可以接入真实农场和零售端数据，实现实时决策支持。",
+
+        footerProto: "仅用于课堂 Demo 展示",
+        qrCaption: "扫码查看 JSAgriSmart 原型页面"
+      }
+    };
+
+    function applyTranslations(lang) {
+      const t = translations[lang];
+      Object.keys(t).forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = t[id];
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentLang = "en";
+      applyTranslations(currentLang);
+      const toggleBtn = document.getElementById("langToggle");
+      toggleBtn.addEventListener("click", () => {
+        currentLang = currentLang === "en" ? "zh" : "en";
+        applyTranslations(currentLang);
+        toggleBtn.textContent =
+          currentLang === "en" ? "EN / 中文" : "中文 / EN";
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>
